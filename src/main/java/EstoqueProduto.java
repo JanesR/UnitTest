@@ -11,13 +11,25 @@ public class EstoqueProduto {
 
 
     public EstoqueProduto(int codProduto){
+
+        setProdutos();
         this.codProd = codProduto;
+        this.saldoEmEstoque = this.produtos.get(codProduto);
+
+    }
+
+    public EstoqueProduto(){
+
+        setProdutos();
+        this.codProd = 0;
+        this.saldoEmEstoque = 0;
+
+    }
+
+    private void setProdutos(){
         this.produtos.put(1,10);
         this.produtos.put(2,3);
         this.produtos.put(3,5);
-
-        this.saldoEmEstoque = this.produtos.get(codProduto);
-
     }
 
     //consulta para verificar se precisa repor o estoque
@@ -46,14 +58,13 @@ public class EstoqueProduto {
     public int setSaldoEstoque(int quantidade){
 
         int saldoAtual = getSaldoEstoque();
+        int novaSaldo = saldoAtual + quantidade;
 
-        this.produtos.put(this.codProd, saldoAtual + quantidade);
-
-        saldoAtual = getSaldoEstoque();
+        this.produtos.put(this.codProd, novaSaldo);
 
         System.out.println("Novo Saldo:"+saldoAtual);
 
-        return  saldoAtual;
+        return  novaSaldo;
     }
 
     public int removeSaldo(int quantidade){
@@ -73,6 +84,23 @@ public class EstoqueProduto {
         saldoAtual = getSaldoEstoque();
 
         return saldoAtual;
+    }
+
+    public boolean adicionaProduto(int codProd,int saldo){
+
+        boolean produtoAdicionado = false;
+
+        if(!this.produtos.containsKey(codProd)){
+            this.produtos.put(codProd,saldo);
+            this.codProd = codProd;
+            System.out.println("Produto adicionado com sucesso!");
+            produtoAdicionado = true;
+        }else{
+            System.out.println("O produto informado ja existe no cadastro");
+            produtoAdicionado = false;
+        }
+
+        return produtoAdicionado;
     }
 
 }

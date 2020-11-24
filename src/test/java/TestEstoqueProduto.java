@@ -1,5 +1,12 @@
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(EstoqueProduto.class)
 
 public class TestEstoqueProduto {
 
@@ -91,6 +98,66 @@ public class TestEstoqueProduto {
 
         Assert.assertEquals(esperado,saldo);
 
+    }
+
+    @Test
+    public void adicionaProdutoTeste(){
+
+        boolean produtoAdicionado = false;
+        int saldoNovoProduto = 10;
+        int saldoEsperado = 10;
+        int saldoConsultado = 0;
+        int codProd = 4;
+
+        EstoqueProduto estoque = new EstoqueProduto();
+        produtoAdicionado = estoque.adicionaProduto(codProd,saldoNovoProduto);
+
+        if(produtoAdicionado){
+            saldoConsultado = estoque.getSaldoEstoque();
+            Assert.assertEquals(saldoEsperado,saldoConsultado);
+        }else{
+            System.out.println("Produto nao adicionado");
+        }
+
+    }
+
+    @Test
+    public void adicionaProdutoExistente(){
+
+        boolean produtoAdicionado = false;
+        int saldoNovoProduto = 10;
+        int saldoEsperado = 10;
+        int saldoConsultado = 0;
+        int codProd = 1;
+
+        EstoqueProduto estoque = new EstoqueProduto();
+        produtoAdicionado = estoque.adicionaProduto(codProd,saldoNovoProduto);
+
+        if(produtoAdicionado){
+            saldoConsultado = estoque.getSaldoEstoque();
+            Assert.assertEquals(saldoEsperado,saldoConsultado);
+        }else{
+            System.out.println("Produto nao adicionado!");
+        }
+
+    }
+
+    @Test
+    public void mockTesteAdicaoEstoque()  throws Exception{
+
+        int valorEsperado = 30;
+        int valorAtual = 0;
+        int novoValor = 0;
+        final String METHOD="getSaldoEstoque";
+
+        EstoqueProduto estoqueMock = new EstoqueProduto(1);
+        EstoqueProduto spy = PowerMockito.spy(estoqueMock);
+        PowerMockito.when(spy, METHOD).thenReturn(20);
+
+        valorAtual = spy.getSaldoEstoque();
+        novoValor = spy.setSaldoEstoque(10);
+
+        Assert.assertEquals(valorEsperado, novoValor, 0);
     }
 
 }
