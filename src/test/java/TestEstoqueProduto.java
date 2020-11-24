@@ -101,6 +101,30 @@ public class TestEstoqueProduto {
     }
 
     @Test
+    public void removerMaisQueSaldoAtual(){
+
+        int esperado = 5;
+        int saldo = 0;
+
+        EstoqueProduto estoque = new EstoqueProduto(3);
+        saldo = estoque.removeSaldo(10);
+        Assert.assertEquals(esperado,saldo);
+
+    }
+
+    @Test
+    public void removerEstoqueMenosQueSaldoAtual(){
+
+        int esperado = 1;
+        int saldo = 0;
+
+        EstoqueProduto estoque = new EstoqueProduto(3);
+        saldo = estoque.removeSaldo(4);
+        Assert.assertEquals(esperado,saldo);
+
+    }
+
+    @Test
     public void adicionaProdutoTeste(){
 
         boolean produtoAdicionado = false;
@@ -146,15 +170,12 @@ public class TestEstoqueProduto {
     public void mockTesteAdicaoEstoque()  throws Exception{
 
         int valorEsperado = 30;
-        int valorAtual = 0;
         int novoValor = 0;
         final String METHOD="getSaldoEstoque";
 
         EstoqueProduto estoqueMock = new EstoqueProduto(1);
         EstoqueProduto spy = PowerMockito.spy(estoqueMock);
         PowerMockito.when(spy, METHOD).thenReturn(20);
-
-        valorAtual = spy.getSaldoEstoque();
         novoValor = spy.setSaldoEstoque(10);
 
         Assert.assertEquals(valorEsperado, novoValor, 0);

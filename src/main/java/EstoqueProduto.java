@@ -32,7 +32,6 @@ public class EstoqueProduto {
         this.produtos.put(3,5);
     }
 
-    //consulta para verificar se precisa repor o estoque
     public boolean consultaReposicao(){
 
         boolean reporEstoque = false;
@@ -72,10 +71,10 @@ public class EstoqueProduto {
         int saldoAtual = getSaldoEstoque();
 
         if (quantidade > 0){
-            if(quantidade > saldoAtual){
-                System.out.println("Quantidade a ser removida maior que o saldo atual!\n O estoque nao sera alterado");
-            }else{
+            if(!(quantidade > saldoAtual)){
                 this.produtos.put(this.codProd, saldoAtual - quantidade);
+            }else{
+                System.out.println("Quantidade a ser removida maior que o saldo atual!\n O estoque nao sera alterado");
             }
         }else{
             System.out.println("Quantidade a ser removida deve ser maior que o 0!\n O estoque nao sera alterado");
